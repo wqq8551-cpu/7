@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arix Holiday | Signature Experience</title>
+    <meta name="description" content="A cinematic interactive 3D holiday greeting." />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              serif: ['"Playfair Display"', 'serif'],
+              sans: ['"Lato"', 'sans-serif'],
+            },
+            colors: {
+              'arix-gold': '#FFD700',
+              'arix-gold-dim': '#C5A000',
+              'arix-emerald': '#002A18',
+              'arix-dark': '#010503',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; background-color: #010503; }
+      #root { height: 100%; width: 100%; }
+      
+      /* Simple dark loader while React boots up */
+      .init-loader {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #C5A000;
+        font-family: "Playfair Display", serif;
+        text-align: center;
+        padding: 20px;
+        background: radial-gradient(circle at center, #05100a 0%, #010503 100%);
+        transition: opacity 0.5s ease-out;
+      }
+      .loader-spinner {
+        width: 40px;
+        height: 40px;
+        border: 2px solid #C5A000;
+        border-top-color: transparent;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px;
+      }
+      .error-msg {
+        color: #ff4444;
+        font-family: monospace;
+        background: rgba(0,0,0,0.8);
+        padding: 20px;
+        border: 1px solid #500;
+        max-width: 80%;
+        text-align: left;
+        display: none; /* Hidden by default */
+      }
+      @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
+    "@react-three/fiber": "https://aistudiocdn.com/@react-three/fiber@^9.4.2",
+    "@react-three/drei": "https://aistudiocdn.com/@react-three/drei@^10.7.7",
+    "@react-three/postprocessing": "https://aistudiocdn.com/@react-three/postprocessing@^3.0.4",
+    "three": "https://aistudiocdn.com/three@^0.181.2",
+    "vite": "https://aistudiocdn.com/vite@^7.2.6",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root">
+      <div class="init-loader" id="loader">
+        <div class="loader-spinner" id="spinner"></div>
+        <p id="status-text">Loading Signature Experience...</p>
+        <div class="error-msg" id="error-display"></div>
+      </div>
+    </div>
+
+    <!-- Error Trap Script: Runs before the app to catch startup failures -->
+    <script>
+      window.onerror = function(message, source, lineno, colno, error) {
+        const loader = document.getElementById('loader');
+        const spinner = document.getElementById('spinner');
+        const status = document.getElementById('status-text');
+        const errorDisplay = document.getElementById('error-display');
+        
+        if (spinner) spinner.style.display = 'none';
+        if (status) status.innerText = "Experience Failed to Load";
+        if (status) status.style.color = "#ff4444";
+        
+        if (errorDisplay) {
+          errorDisplay.style.display = 'block';
+          errorDisplay.innerHTML = `<strong>Error:</strong> ${message}<br/><small>${source}:${lineno}</small>`;
+        }
+        console.error("Critical Load Error:", error);
+      };
+
+      // Check if user is trying to open directly via file://
+      if (window.location.protocol === 'file:') {
+        setTimeout(() => {
+            throw new Error("Security Restriction: You cannot open this file directly. Please use 'npm run dev' to view locally, or view the generated GitHub link.");
+        }, 500);
+      }
+    </script>
+
+    <script type="module" src="./index.tsx"></script>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
